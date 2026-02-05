@@ -1,8 +1,11 @@
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import dotenv from "dotenv";
 
-dotenv.config();
+// Only load dotenv locally
+if (process.env.NODE_ENV !== "production") {
+  const dotenv = await import("dotenv");
+  dotenv.config();
+}
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
