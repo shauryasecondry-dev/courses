@@ -78,7 +78,10 @@ else{
             const token=jwt.sign({
                 id:user._id
             },process.env.SECRET)//token created for login
-            res.cookie("jwt",token)
+            res.cookie("jwt",token,{httpOnly: true,    // can't be accessed by JS
+             secure: true,       
+             sameSite: "none",  
+             maxAge: 24*60*60*1000})
             return res.status(200).json({message:"login success",username:user.username,email:user.email})
 
         }
