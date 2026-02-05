@@ -1,52 +1,27 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv'
 import bcryptjs from 'bcryptjs'
 import jwt from "jsonwebtoken"
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import multer from 'multer'
-import { Readable } from 'stream';
-import {userMiddleware} from "./userValidation.js"
-import {signupSchema,loginSchema,courseSchema} from "./joiValidation.js"
-import {cloudinary} from './cloudConfig.js'
+import {userMiddleware} from "./userValidation.js"//to check is logged in can acess( req.userId)
+import {signupSchema,loginSchema,courseSchema} from "./joiValidation.js"//to validate before going to backend
+import {storage} from './cloudConfig.js'
 import User from "./models/User.js"
 import Course from "./models/Course.js"
 import Purchase from "./models/Purchase.js";
-const upload = multer({ 
-  storage: multer.memoryStorage()
-});
-
-// ✅ Upload helper function
-async function uploadToCloudinary(file) {
-  return new Promise((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
-      { folder: 'course' },
-      (error, result) => {
-        if (error) reject(error);
-        else resolve(result);
-      }
-    );
-    Readable.from(file.buffer).pipe(uploadStream);
-  });
-}
-
+const upload=multer({storage})
 let app=express();
-if (process.env.NODE_ENV !== "production") {
-  const dotenv = await import("dotenv");
-  dotenv.config();
-}
-
+ dotenv.config();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Update CORS for production
 app.use(cors({
-    origin: [
-        "https://coourse-app-fg2x.vercel.app",
-        "http://localhost:5173"
-    ],
-    credentials: true
+    origin:"http://localhost:5174",  // No trailing slash
+    credentials:true  // Fixed spelling
 }))
 
 async function main() {
@@ -101,13 +76,8 @@ else{
         else{
             const token=jwt.sign({
                 id:user._id
-            },process.env.SECRET)
-            res.cookie("jwt", token, {
-  httpOnly: true,
-  secure: true,    // HTTPS required
-  sameSite: "none" // cross-origin cookies
-})
-
+            },process.env.SECRET)//token created for login
+            res.cookie("jwt",token)
             return res.status(200).json({message:"login success",username:user.username,email:user.email})
 
         }
@@ -135,8 +105,8 @@ catch(error){
    return res.status(500).json({message:error.message});
 }
 })
-
-// ✅ UPDATED - POST route with Cloudinary upload
+//admin can add a course
+//admin can add a course
 app.post("/admin/course",userMiddleware,upload.single("image"),async(req,res)=>{
     try{
         req.body.price = Number(req.body.price);
@@ -147,15 +117,15 @@ app.post("/admin/course",userMiddleware,upload.single("image"),async(req,res)=>{
         if(req.body.price==""){
           return  res.status(400).json({message:"price is required"})
         }
+
         if(!req.file){
             return res.status(404).json({message:"file not found"})
         }
  
-        // ✅ Upload to Cloudinary
-        const result = await uploadToCloudinary(req.file);
         
+        // ✅ Destructure once
         let {title, description, price} = req.body;
-        let image = result.secure_url; // ✅ Use Cloudinary URL
+        let image = req.file.path;
         
         let course = new Course({title, description, price, image,user:req.userId});
         await course.save();
@@ -165,7 +135,7 @@ app.post("/admin/course",userMiddleware,upload.single("image"),async(req,res)=>{
         return res.status(500).json({message:error.message})
     }
 })
-
+//data for all courses
 app.get("/data",async(req,res)=>{
     try{
     let user=await Course.find({}).populate("user","-password");
@@ -195,13 +165,13 @@ app.delete("/admin/course/:id",userMiddleware,async(req,res)=>{
     catch(error){
         res.status(500).json({message:error.message})
     }
+
 })
 
-// ✅ UPDATED - PATCH route with Cloudinary upload
 app.patch("/admin/course/:id",upload.single("image") ,userMiddleware, async(req,res) => {
     try {
         let id = req.params.id;
-        req.body.price = Number(req.body.price);
+            req.body.price = Number(req.body.price);
         let {error} = courseSchema.validate(req.body);
         if(error){
             return res.status(400).json({message:error.details[0].message})
@@ -209,6 +179,7 @@ app.patch("/admin/course/:id",upload.single("image") ,userMiddleware, async(req,
         if(req.body.price==""){
           return  res.status(400).json({message:"price is required"})
         }
+
         if(!req.file){
             return res.status(404).json({message:"file not found"})
         }
@@ -219,29 +190,30 @@ app.patch("/admin/course/:id",upload.single("image") ,userMiddleware, async(req,
             return res.status(404).json({message: "Course not found"});
         }
         
-        if(req.userId == data.user._id.toString()) {
-            // ✅ Upload to Cloudinary
-            const result = await uploadToCloudinary(req.file);
-            req.body.image = result.secure_url; // ✅ Use Cloudinary URL
+        if(req.userId == data.user._id.toString()) {  // ✅ Add .toString()
+            if(req.file) {
+                req.body.image = req.file.path;
+            }
             
+            // ✅ Convert price to number if it exists
             if(req.body.price) {
                 req.body.price = Number(req.body.price);
             }
 
             let q = await Course.findByIdAndUpdate(id, req.body, {new: true});
             return res.status(200).json({message: "Updated successfully"});
-        } else {
+        } else {  // ✅ Move else inside try
             return res.status(403).json({message: "You can only update your own courses"});
         }
     } catch(error) {
         return res.status(500).json({message: error.message});
     }
 })
-
+//add user middleware only login can purchase a course
 app.get("/user/purchase/:id",userMiddleware,async(req,res)=>{
 try{
-let courseId=req.params.id
-let userId=req.userId;
+let courseId=req.params.id//user clicking and buying specific course
+let userId=req.userId;//current user logged in
  
 if(!userId){
    return  res.status(402).json({message:"user dont exist"})
@@ -256,23 +228,23 @@ catch(error){
     res.status(500).json({message:error.message})
 }
 })
-
 app.get("/user/purchasedata", userMiddleware, async (req, res) => {
   try {
-    const id = req.userId;
+    const id = req.userId; // logged-in user id
 
     const purchase = await Purchase.find({ user: id })
       .populate({
         path: "course",
         populate: {
           path: "user",
-          select: "-password"
+          select: "-password" // course owner without password
         }
       })
-      .populate("user", "-password");
+      .populate("user", "-password"); // purchaser (logged-in user)
 
     res.status(200).json(purchase);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+ 

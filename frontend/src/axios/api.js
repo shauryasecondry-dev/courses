@@ -1,6 +1,6 @@
 import axios from 'axios';
 let url = axios.create({
-    baseURL: "https://coourseapp-1.onrender.com",
+    baseURL: "http://localhost:4000",
     withCredentials: true  // ✅ Set globally for all requests
 })
 

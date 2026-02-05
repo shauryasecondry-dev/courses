@@ -21,7 +21,6 @@ function App() {
   return (
     <Routes>
     <Route path="/" element={<Navigate to="/user/home" />} />
-
       <Route element={<Login />} path="/login" />
       <Route element={<Signup />} path="/signup" />
       <Route element={<Logout />} path="/logout" />
@@ -30,7 +29,7 @@ function App() {
       <Route element={<UserHome/>} path="/user/home" />
       <Route element={<OwnCourses/>} path="/admin/owncourse" />
       <Route element={<Edit />} path="/admin/edit/:id" />
-      <Route element={<AllCourses />} path="/allcourses" />
+      
       <Route element={<Profile/>} path="/admin/profile" />
       <Route element={<Purchase/>} path="/user/purchase" />
       <Route element={<Read/>} path="/user/purchase/read" />
