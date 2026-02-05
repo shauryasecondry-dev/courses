@@ -21,10 +21,8 @@
     "vite": "^7.2.4"
   },
   "dependencies": {
-    "cloudinary": "^1.41.3",
-    "multer": "^2.0.2",
-    "multer-storage-cloudinary": "^4.0.0",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.0"
   }
 }
