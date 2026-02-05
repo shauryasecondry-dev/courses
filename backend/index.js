@@ -45,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin: process.env.NODE_ENV === "production" 
         ? process.env.FRONTEND_URL
-        : "http://localhost:5173",
+        :"coourse-app-fg2x-b0fcs1kbs-shauryas-projects-2528bfba.vercel.app",
     credentials: true
 }))
 
