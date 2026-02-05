@@ -2,7 +2,10 @@ import React from "react";
 import NavbarAdmin from "./NavbarAdmin.jsx";
 import { useAuth } from "./context/AuthProvider.jsx";
 import { Navigate, Link } from "react-router-dom";
-
+import addImage from "./assets/addImage.png"
+import deleteImage from "./assets/deleteImage.png"
+import editImage from "./assets/editImage.png"
+ import AminCourse from './assets/AminCourse.jpg'
 function AdminHome() {
     const { user } = useAuth();
 
@@ -33,7 +36,7 @@ function AdminHome() {
 
                     <div className="col-md-6 text-center">
                         <img
-                            src="/src/assets/AminCourse.jpg"
+                            src={AminCourse}
                             alt="Admin Dashboard"
                             className="img-fluid rounded shadow"
                             style={{ maxHeight: "400px", objectFit: "cover" }}
@@ -50,7 +53,7 @@ function AdminHome() {
                             <div className="card text-white" style={{ backgroundColor: "#212529" }}>
                                 <div className="card-body text-center py-4">
                                     <img
-                                        src="/src/assets/addImage.png"
+                                        src={addImage}
                                         alt="Add"
                                         style={{ width: "80px", marginBottom: "15px", filter: "brightness(0) invert(1)" }}
                                     />
@@ -67,7 +70,7 @@ function AdminHome() {
                             <div className="card text-white" style={{ backgroundColor: "#212529" }}>
                                 <div className="card-body text-center py-4">
                                     <img
-                                        src="/src/assets/editImage.png"
+                                        src={editImage}
                                         alt="Edit"
                                         style={{ width: "80px", marginBottom: "15px", filter: "brightness(0) invert(1)" }}
                                     />
@@ -84,7 +87,7 @@ function AdminHome() {
                             <div className="card text-white" style={{ backgroundColor: "#212529" }}>
                                 <div className="card-body text-center py-4">
                                     <img
-                                        src="\src\assets\deleteImage.png"
+                                        src={deleteImage}
                                         alt="Delete"
                                         style={{ width: "80px", marginBottom: "15px", filter: "brightness(0) invert(1)" }}
                                     />

@@ -2,7 +2,10 @@ import React from "react";
 import Navbar from "./Navbar.jsx";
 import AllCourses from "./AllCourses";
 import { Link } from "react-router-dom";
-
+import explore from "./assets/explore.jpg"
+import manageContent from "./assets/manageContent.jpg"
+import purchase from "./assets/purchase.jpg"
+import addCourse from "./assets/addCourse.jpg"
 function UserHome() {
   return (
     <>
@@ -84,7 +87,7 @@ function UserHome() {
                 flexDirection: "column"
               }}>
                 <img
-                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=500&fit=crop"
+                  src={explore}
                   alt="Learn"
                   style={{ width: "100%", height: "28vh", objectFit: "cover" }}
                 />
@@ -111,7 +114,7 @@ function UserHome() {
                 flexDirection: "column"
               }}>
                 <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=500&fit=crop"
+                  src={purchase}
                   alt="Study"
                   style={{ width: "100%", height: "28vh", objectFit: "cover" }}
                 />
@@ -138,7 +141,7 @@ function UserHome() {
                 flexDirection: "column"
               }}>
                 <img
-                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=500&fit=crop"
+                  src={addCourse}
                   alt="Teach"
                   style={{ width: "100%", height: "28vh", objectFit: "cover" }}
                 />
@@ -165,7 +168,7 @@ function UserHome() {
                 flexDirection: "column"
               }}>
                 <img
-                  src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=500&fit=crop"
+                  src={manageContent}
                   alt="Manage"
                   style={{ width: "100%", height: "28vh", objectFit: "cover" }}
                 />
