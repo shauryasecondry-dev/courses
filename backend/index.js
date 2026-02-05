@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import multer from 'multer'
 import {userMiddleware} from "./userValidation.js"//to check is logged in can acess( req.userId)
-import {signupSchema,loginSchema,courseSchema} from "./joiValidation.js"//to validate before going to backend
+import {signupSchema,loginSchema,courseSchema} from "./joiValidation.js" 
 import {storage} from './cloudConfig.js'
 import User from "./models/User.js"
 import Course from "./models/Course.js"
@@ -20,8 +20,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin:process.env.FRONTEND_URL,  // No trailing slash
-    credentials:true  // Fixed spelling
+    origin:process.env.FRONTEND_URL, 
+    credentials:true,
 }))
 
 async function main() {
