@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin:"http://localhost:5174",  // No trailing slash
+    origin:process.env.FRONTEND_URL,  // No trailing slash
     credentials:true  // Fixed spelling
 }))
 
