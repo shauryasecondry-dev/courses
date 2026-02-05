@@ -13,6 +13,7 @@ import User from "./models/User.js"
 import Course from "./models/Course.js"
 import Purchase from "./models/Purchase.js";
 const upload=multer({storage})
+const port=process.env.PORT||4000
 let app=express();
  dotenv.config();
 app.use(cookieParser());
@@ -28,8 +29,8 @@ async function main() {
   await mongoose.connect(process.env.MONGO_URL);
 }
 main().catch(err => console.log(err));
-app.listen(process.env.PORT,()=>{
-    console.log("on port",process.env.PORT)
+app.listen(port,()=>{
+    console.log("on port",port)
 })
 app.post("/signup",async(req,res)=>{
 try{
