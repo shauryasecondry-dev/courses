@@ -42,10 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ✅ Update CORS for production
 app.use(cors({
-    origin: [
-        "https://coourse-app-fg2x.vercel.app",
-        "http://localhost:5173"
-    ],
+    origin: true,  // Allow all origins for now
     credentials: true
 }))
 
