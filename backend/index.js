@@ -87,7 +87,6 @@ catch(error){
   return  res.status(500).json({message:error.message})
 }
 })
-
 app.post("/login",async(req,res)=>{
     try
 {let {error}=loginSchema.validate(req.body);
@@ -108,13 +107,8 @@ else{
         else{
             const token=jwt.sign({
                 id:user._id
-            },process.env.SECRET)
-            res.cookie("jwt", token, {
-  httpOnly: true,
-  secure: true,    // HTTPS required
-  sameSite: "none" // cross-origin cookies
-})
-
+            },process.env.SECRET)//token created for login
+            res.cookie("jwt",token)
             return res.status(200).json({message:"login success",username:user.username,email:user.email})
 
         }
