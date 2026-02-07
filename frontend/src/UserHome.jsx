@@ -203,7 +203,7 @@ function UserHome() {
           <div style={{display:"flex",justifyContent:"center",width:"100vw"}}>
          <SearchFunctionality/>
          </div>
-          <AllCourses />
+ 
 
         </div>
       </div>
