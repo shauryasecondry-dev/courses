@@ -78,11 +78,12 @@ else{
             const token=jwt.sign({
                 id:user._id
             },process.env.SECRET)//token created for login
-            res.cookie("jwt", token, {
+res.cookie("jwt", token, {
   httpOnly: true,
-  sameSite: "lax",
-  secure: false   // true ONLY on HTTPS (Render/Vercel)
+  sameSite: "none",
+  secure: true,
 });
+
 
             return res.status(200).json({message:"login success",username:user.username,email:user.email})
 
@@ -95,7 +96,12 @@ catch(error){
 })
 app.get("/logout",(req,res)=>{
 try{
-    res.clearCookie("jwt");
+    res.clearCookie("jwt", {
+  httpOnly: true,
+  sameSite: "none",
+  secure: true,
+});
+
     return res.status(200).json({message:"logged out successfull"})
 }
 catch(error){
