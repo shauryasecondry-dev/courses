@@ -8,8 +8,8 @@ return (
 <>
 
 <Navbar/>
-   <div style={{width:"99vw",display:"flex",justifyContent:"center"}}>
-   { (!user)?<h3 style={{marginBottom:"5vh"}}>login to purchase</h3>:""}
+   <div style={{width:"99vw",display:"flex",justifyContent:"center",height:"5vh"}}>
+   { (!user)?<h3>login to purchase</h3>:""}
     </div>
  
 
