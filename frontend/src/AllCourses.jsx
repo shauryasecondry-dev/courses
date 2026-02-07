@@ -34,7 +34,7 @@ function AllCourses() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [filter]);
 
   return (
     <div style={{
