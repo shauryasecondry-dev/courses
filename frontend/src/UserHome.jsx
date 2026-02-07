@@ -6,8 +6,9 @@ import explore from "./assets/explore.jpg"
 import manageContent from "./assets/manageContent.jpg"
 import purchase from "./assets/purchase.jpg"
 import addCourse from "./assets/addCourse.jpg"
- 
+ import {useAuth} from "./context/AuthProvider.jsx"
 function UserHome() {
+  let {user}=useAuth();
   return (
     <>
       <Navbar />
@@ -196,6 +197,7 @@ function UserHome() {
           <p className="text-center mb-5" style={{ color: "#718096", fontSize: "1.1rem" }}>
             Browse our complete course catalog
           </p>
+          {(user)?"":<h3>login to view all Courses</h3>}
           <AllCourses />
         </div>
       </div>
