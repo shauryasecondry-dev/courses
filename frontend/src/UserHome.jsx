@@ -201,7 +201,7 @@ function UserHome() {
  
           {(user)?"":<h3 style={{display:"flex",justifyContent:"center",marginBottom:"2vh"}}>login to view all Courses</h3>}
           <div style={{display:"flex",justifyContent:"center",width:"100vw"}}>
-         <SearchFunctionality/>
+         
          </div>
  
 
