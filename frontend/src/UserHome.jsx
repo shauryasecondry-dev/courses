@@ -203,9 +203,7 @@ function UserHome() {
           <div style={{display:"flex",justifyContent:"center",width:"100vw"}}>
          <SearchFunctionality/>
          </div>
-         <div style={{display:"flex",justifyContent:"center"}}>
           <AllCourses />
-          </div>
 
         </div>
       </div>
