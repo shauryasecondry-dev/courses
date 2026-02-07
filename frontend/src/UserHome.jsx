@@ -199,8 +199,10 @@ function UserHome() {
             Browse our complete course catalog
           </p>
  
-          {(user)?"":<h3 style={{display:"flex",justifyContent:"center"}}>login to view all Courses</h3>}
+          {(user)?"":<h3 style={{display:"flex",justifyContent:"center",marginBottom:"2vh"}}>login to view all Courses</h3>}
+          <div style={{display:"flex",justifyContent:"center",width:"100vw"}}>
          <SearchFunctionality/>
+         </div>
           <AllCourses />
 
         </div>
