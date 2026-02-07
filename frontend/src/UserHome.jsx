@@ -7,6 +7,7 @@ import manageContent from "./assets/manageContent.jpg"
 import purchase from "./assets/purchase.jpg"
 import addCourse from "./assets/addCourse.jpg"
  import {useAuth} from "./context/AuthProvider.jsx"
+ import SearchFunctionality from "./SearchFunctionality.jsx"
 function UserHome() {
   let {user}=useAuth();
   return (
@@ -197,8 +198,11 @@ function UserHome() {
           <p className="text-center mb-5" style={{ color: "#718096", fontSize: "1.1rem" }}>
             Browse our complete course catalog
           </p>
-          {(user)?"":<h3>login to view all Courses</h3>}
+ 
+          {(user)?"":<h3 style={{display:"flex",justifyContent:"center"}}>login to view all Courses</h3>}
+         <SearchFunctionality/>
           <AllCourses />
+
         </div>
       </div>
  
