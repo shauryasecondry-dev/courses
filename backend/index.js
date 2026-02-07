@@ -31,10 +31,7 @@ app.use(cors({
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
 }
-main().catch(err => console.log(err));
-app.listen(port,()=>{
-    console.log("on port",port)
-})
+
 
 const distPath = path.join('.', 'dist'); 
  app.use(express.static(distPath));
@@ -280,3 +277,7 @@ app.use((req, res, next) => {
   // Otherwise serve index.html (React handles routing)
   res.sendFile(path.join(distPath, 'index.html'));
 });
+main().catch(err => console.log(err));
+app.listen(port,()=>{
+    console.log("on port",port)
+})
