@@ -6,6 +6,7 @@ import explore from "./assets/explore.jpg"
 import manageContent from "./assets/manageContent.jpg"
 import purchase from "./assets/purchase.jpg"
 import addCourse from "./assets/addCourse.jpg"
+ 
 function UserHome() {
   return (
     <>
@@ -198,6 +199,7 @@ function UserHome() {
           <AllCourses />
         </div>
       </div>
+ 
     </>
   );
 }

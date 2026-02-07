@@ -3,7 +3,7 @@ import {edit} from "./axios/api.js"
 import { useParams } from "react-router-dom";
 import Error from "./Error.jsx"
 import NavbarAdmin from "./NavbarAdmin.jsx"
-
+ 
 function Edit(){
   let [errorSuccess,setErrorSuccess] = useState({
     status:null,
@@ -118,6 +118,7 @@ function Edit(){
 
         </div>
       </div>
+ 
     </>
   )
 }

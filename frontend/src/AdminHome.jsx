@@ -5,6 +5,7 @@ import { Navigate, Link } from "react-router-dom";
 import addImage from "./assets/addImage.png"
 import deleteImage from "./assets/deleteImage.png"
 import editImage from "./assets/editImage.png"
+ 
  import AminCourse from './assets/AminCourse.jpg'
 function AdminHome() {
     const { user } = useAuth();
@@ -100,6 +101,7 @@ function AdminHome() {
 
                 </div>
             </div>
+          
         </>
     );
 }

@@ -66,7 +66,7 @@ function Navbar() {
                                 onClick={handelClick}
                                 style={{fontSize: "clamp(12px, 2vw, 14px)", padding: "0.5vw 1.5vw"}}
                             >
-                                Add Course
+                               Admin
                             </button>
                         </>
                     )}

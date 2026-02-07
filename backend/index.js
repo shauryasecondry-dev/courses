@@ -13,17 +13,17 @@ import User from "./models/User.js"
 import Course from "./models/Course.js"
 import Purchase from "./models/Purchase.js";
 const upload=multer({storage})
-const port=process.env.PORT||4000
+const port=4000
 let app=express();
  dotenv.config();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(cors({
-    origin:process.env.FRONTEND_URL, 
-    withCredentials:true,
-}))
+ 
+ app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
@@ -78,7 +78,12 @@ else{
             const token=jwt.sign({
                 id:user._id
             },process.env.SECRET)//token created for login
-            res.cookie("jwt",token)
+            res.cookie("jwt", token, {
+  httpOnly: true,
+  sameSite: "lax",
+  secure: false   // true ONLY on HTTPS (Render/Vercel)
+});
+
             return res.status(200).json({message:"login success",username:user.username,email:user.email})
 
         }

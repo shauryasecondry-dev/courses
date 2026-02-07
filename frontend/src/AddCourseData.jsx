@@ -4,7 +4,7 @@ import Error from "./Error.jsx"
 import { useAuth } from "./context/AuthProvider.jsx"
 import { Navigate } from 'react-router-dom'
 import Navbar from './Navbar.jsx'
-
+ 
 function AddCourseData() {
     let { user, setUser } = useAuth();
     
@@ -153,6 +153,7 @@ function AddCourseData() {
                     </div>
                 </div>
             </div>
+            
         </>
     )
 }

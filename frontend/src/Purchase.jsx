@@ -8,22 +8,26 @@ function Purchase() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [arr, setArr] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // 🔐 AUTH CHECK — OUTSIDE useEffect (as you asked)
   if (!user) {
     return <Navigate to="/login" />;
   }
 
   async function infoPurchase() {
-    let res = await purchaseData();
-    setArr(res.data);
+    try {
+      const res = await purchaseData();
+      setArr(res.data || []);
+    } catch (err) {
+      console.error("Failed to load purchases", err);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  function handelClick(e) {
-    e.preventDefault();
-    navigate("/user/purchase/read", {
-      state: { arr },
-    });
+  function handelClick(ele) {
+    if (!ele || !ele.course) return;
+    navigate("/user/purchase/read", { state: { ele } });
   }
 
   useEffect(() => {
@@ -34,22 +38,13 @@ function Purchase() {
     <>
       <Navbar />
 
-      {/* Heading */}
       <div style={{ marginTop: "12vh", textAlign: "center" }}>
         <h1 style={{ fontWeight: "600" }}>Purchased Courses</h1>
-        <h2
-          style={{
-            fontWeight: "300",
-            fontSize: "1.2rem",
-            marginTop: "1vh",
-            color: "#666",
-          }}
-        >
+        <p style={{ color: "#666" }}>
           Access all courses you have enrolled in
-        </h2>
+        </p>
       </div>
 
-      {/* Cards */}
       <div
         style={{
           display: "flex",
@@ -60,84 +55,80 @@ function Purchase() {
           paddingBottom: "5vh",
         }}
       >
-        {arr.length === 0 ? (
-          <h4 style={{ color: "#777", fontWeight: "300" }}>
-            No purchases found
-          </h4>
+        {loading ? (
+          <h4 style={{ color: "#777" }}>Loading...</h4>
+        ) : arr.length === 0 ? (
+          <h4 style={{ color: "#777" }}>No purchases found</h4>
         ) : (
-          arr.map((ele, index) => (
-            <div
-              key={index}
-              style={{
-                width: "19vw",
-                minWidth: "260px",
-                borderRadius: "0.8vw",
-                overflow: "hidden",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                backgroundColor: "#fff",
-              }}
-            >
-              {/* Image */}
-              <img
-                src={ele.course.image}
-                alt={ele.course.title}
+          arr.map((ele, index) => {
+            if (!ele?.course) return null; // ✅ CRASH FIX
+
+            return (
+              <div
+                key={index}
                 style={{
-                  width: "100%",
-                  height: "22vh",
-                  objectFit: "cover",
+                  width: "19vw",
+                  minWidth: "260px",
+                  borderRadius: "0.8vw",
+                  overflow: "hidden",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                  backgroundColor: "#fff",
                 }}
-              />
-
-              {/* Content */}
-              <div style={{ padding: "1.2vw" }}>
-                <h6 style={{ fontWeight: "600" }}>
-                  {ele.course.title}
-                </h6>
-
-                <p
+              >
+                <img
+                  src={ele.course.image}
+                  alt={ele.course.title}
                   style={{
-                    fontSize: "0.9rem",
-                    color: "#666",
-                    height: "6vh",
-                    overflow: "hidden",
-                  }}
-                >
-                  {ele.course.description}
-                </p>
-
-                <h5 style={{ textAlign: "center", fontWeight: "600" }}>
-                  ₹ {ele.course.price}
-                </h5>
-
-                <div
-                  style={{
-                    textAlign: "center",
-                    fontSize: "0.85rem",
-                    color: "#555",
-                  }}
-                >
-                  <i className="fa-solid fa-user"></i>{" "}
-                  {ele.course.user.username}
-                </div>
-
-                <button
-                  onClick={handelClick}
-                  style={{
-                    marginTop: "1.5vh",
                     width: "100%",
-                    height: "4vh",
-                    border: "none",
-                    borderRadius: "0.4vw",
-                    background: "#212529",
-                    color: "#fff",
-                    fontWeight: "600",
+                    height: "22vh",
+                    objectFit: "cover",
                   }}
-                >
-                  Read
-                </button>
+                />
+
+                <div style={{ padding: "1.2vw" }}>
+                  <h6 style={{ fontWeight: "600" }}>
+                    {ele.course.title}
+                  </h6>
+
+                  <p
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "#666",
+                      height: "6vh",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {ele.course.description}
+                  </p>
+
+                  <h5 style={{ textAlign: "center" }}>
+                    ₹ {ele.course.price}
+                  </h5>
+
+                  <div style={{ textAlign: "center", fontSize: "0.85rem" }}>
+                    <i className="fa-solid fa-user"></i>{" "}
+                    {ele.course.user?.username}
+                  </div>
+
+                  <button
+                    onClick={() => handelClick(ele)}
+                    style={{
+                      marginTop: "1.5vh",
+                      width: "100%",
+                      height: "4vh",
+                      border: "none",
+                      borderRadius: "0.4vw",
+                      background: "#212529",
+                      color: "#fff",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Read
+                  </button>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </>

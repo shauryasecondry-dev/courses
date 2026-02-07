@@ -4,7 +4,7 @@ import { useAuth } from "./context/AuthProvider.jsx";
 import NavbarAdmin from "./NavbarAdmin.jsx";
 import { Link, Navigate } from "react-router-dom";
 import Delete from "./Delete.jsx";
-
+ 
 function OwnCourses() {
   let { user } = useAuth();
   let [details, setDetails] = useState([]);
@@ -134,7 +134,9 @@ function OwnCourses() {
           ))
         )}
       </div>
+     
     </>
+
   );
 }
 

@@ -4,6 +4,7 @@ import { data } from "./axios/api.js";
 import NavbarAdmin from "./NavbarAdmin.jsx"
 import {Navigate} from 'react-router-dom'
 import {purchaseData } from "./axios/api.js"
+ 
 function Profile(){
     let [details,setDetails]=useState([])
     let [purchases,setPurchases]=useState([])
@@ -109,6 +110,7 @@ function Profile(){
                 </div>
             </div>
         </div>
+     
         </>
     )
 }
