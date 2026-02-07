@@ -18,33 +18,30 @@ function Logout() {
       // API call
       await logout();
      
-      // success message
+      // Clear auth state
+      setUser(null);
+      
+      // Success message
       setSuccessError({
         status: 200,
         message: "Logout successful",
       });
 
-      // ✅ clear auth state FIRST
-      setUser(null);
-
-      // ✅ redirect without keeping history
+      // ✅ Just navigate - NO reload needed!
       setTimeout(() => {
         navigate("/login", { replace: true });
-        window.location.reload();
       }, 300);
 
     } catch (error) {
       setSuccessError({
         status: error.response?.status || 500,
-        message:
-          error.response?.data?.message || "Cannot connect to server",
+        message: error.response?.data?.message || "Cannot connect to server",
       });
     }
   }
 
   return (
     <>
-      {/* success / error message */}
       <Error SuccessError={SuccessError} />
 
       <button
