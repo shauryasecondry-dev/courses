@@ -18,7 +18,6 @@ else{
 
     setFilter(details.filter((ele)=>ele.title.toLowerCase().trim().includes(event.target.value.toLowerCase().trim())))
 }
- 
 }
 
 async function DetailsAll(){

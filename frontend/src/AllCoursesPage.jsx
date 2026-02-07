@@ -13,8 +13,9 @@ return (
     </div>
  
 
- 
+ <div style={{width:"100vw",justifyContent:"center"}}>
  <SearchFunctionality/>
+ </div>
  
 
 <div style={{marginTop:"17vh"}}>
