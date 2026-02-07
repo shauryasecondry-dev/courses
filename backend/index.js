@@ -77,7 +77,8 @@ else{
         else{
             const token=jwt.sign({
                 id:user._id
-            },process.env.SECRET)//token created for login
+            },process.env.SECRET)
+            //token created for login
 res.cookie("jwt", token, {
   httpOnly: true,
   sameSite: "none",
@@ -95,7 +96,8 @@ catch(error){
 }
 })
 app.get("/logout",(req,res)=>{
-try{
+try{ 
+    //token created at logout 
     res.clearCookie("jwt", {
   httpOnly: true,
   sameSite: "none",
@@ -259,4 +261,9 @@ app.get("/user/purchasedata", userMiddleware, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+ app.use(express.static(path.join(__dirname, 'build')));
+
  
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});

@@ -7,7 +7,7 @@ import manageContent from "./assets/manageContent.jpg"
 import purchase from "./assets/purchase.jpg"
 import addCourse from "./assets/addCourse.jpg"
  import {useAuth} from "./context/AuthProvider.jsx"
- import SearchFunctionality from "./SearchFunctionality.jsx"
+ 
 function UserHome() {
   let {user}=useAuth();
   return (

@@ -4,9 +4,7 @@ const url = axios.create({
   baseURL: "https://courses-1ntg.onrender.com",
   withCredentials: true
 });
-
  
-
 export function me() {
     return url.get("/me");
 }
