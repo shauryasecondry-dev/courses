@@ -13,7 +13,7 @@ return (
     </div>
  
 
- <div style={{width:"100vw",justifyContent:"center"}}>
+ <div style={{width:"100vw",display:"flex",justifyContent:"center"}}>
  <SearchFunctionality/>
  </div>
  
