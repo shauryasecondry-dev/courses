@@ -6,7 +6,7 @@ function AllCourses() {
   let {user}=useAuth();
   const [details, setDetails] = useState([]);
   let location=useLocation();
-  const {filter}=location.state;
+  const {filter}=location.state?.filter;
   async function addPurchase(id) {
     try {
       let res = await purchase(id);
