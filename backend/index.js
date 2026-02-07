@@ -6,12 +6,15 @@ import jwt from "jsonwebtoken"
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import multer from 'multer'
+ 
 import {userMiddleware} from "./userValidation.js"//to check is logged in can acess( req.userId)
 import {signupSchema,loginSchema,courseSchema} from "./joiValidation.js" 
 import {storage} from './cloudConfig.js'
 import User from "./models/User.js"
 import Course from "./models/Course.js"
 import Purchase from "./models/Purchase.js";
+import path from 'path';
+import fs from 'fs';
 const upload=multer({storage})
 const port=process.env.PORT||4000
 let app=express();
@@ -32,6 +35,11 @@ main().catch(err => console.log(err));
 app.listen(port,()=>{
     console.log("on port",port)
 })
+
+const distPath = path.join('.', 'dist'); 
+ app.use(express.static(distPath));
+
+ 
 app.post("/signup",async(req,res)=>{
 try{
 let {error}=signupSchema.validate(req.body);
@@ -261,9 +269,14 @@ app.get("/user/purchasedata", userMiddleware, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
- app.use(express.static(path.join(__dirname, 'build')));
+app.use((req, res, next) => {
+  const filePath = path.join(distPath, req.path);
 
- 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  // Serve static file if it exists
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    return res.sendFile(filePath);
+  }
+
+  // Otherwise serve index.html (React handles routing)
+  res.sendFile(path.join(distPath, 'index.html'));
 });
