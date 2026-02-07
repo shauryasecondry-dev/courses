@@ -13,7 +13,7 @@ import User from "./models/User.js"
 import Course from "./models/Course.js"
 import Purchase from "./models/Purchase.js";
 const upload=multer({storage})
-const port=4000
+const port=process.env.PORT||4000
 let app=express();
  dotenv.config();
 app.use(cookieParser());
