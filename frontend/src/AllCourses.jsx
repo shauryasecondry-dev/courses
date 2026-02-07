@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { data, purchase } from "./axios/api.js";
-
+import {useAuth} from "./AuthProvider.jsx"
 function AllCourses() {
+  let {user}=useAuth();
   const [details, setDetails] = useState([]);
 
   async function addPurchase(id) {
@@ -68,7 +69,7 @@ function AllCourses() {
                 <i className="fa-solid fa-user" style={{ marginRight: "0.4vw" }}></i>
                 {ele.user.username}
               </div>
-              <button
+               {(user)?<button
                 onClick={() => addPurchase(ele._id)}
                 style={{
                   width: "100%",
@@ -82,9 +83,11 @@ function AllCourses() {
                   cursor: "pointer",
                 }}
               >
+         
                 <i className="fa-solid fa-cart-shopping" style={{ marginRight: "0.5vw" }}></i>
                 Enroll
-              </button>
+              </button>:""}
+              
             </div>
           </div>
         ))

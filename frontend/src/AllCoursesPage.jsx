@@ -5,7 +5,7 @@ function AllCoursesPage(){
 return (
 <>
 <Navbar/>
-
+<h3>login to purchase</h3>
 <div style={{marginTop:"17vh"}}>
 <AllCourses ></AllCourses>
 </div>
