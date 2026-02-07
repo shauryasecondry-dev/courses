@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { data, purchase } from "./axios/api.js";
 import {useAuth} from "./context/AuthProvider.jsx"
+import {useLocation} from 'react-router-dom'
 function AllCourses() {
   let {user}=useAuth();
   const [details, setDetails] = useState([]);
-
+  let location=useLocation();
+  const {filter}=location.state;
   async function addPurchase(id) {
     try {
       let res = await purchase(id);
@@ -16,8 +18,12 @@ function AllCourses() {
 
   async function getData() {
     try {
-      let res = await data();
-      setDetails(res.data);
+    if(filter==undefined){
+    let res=await data();
+     setDetails(res);
+    }
+    else
+      setDetails(filter);
     } catch (err) {
       console.log(err);
     }
