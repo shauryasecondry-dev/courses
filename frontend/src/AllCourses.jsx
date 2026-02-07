@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { data, purchase } from "./axios/api.js";
-import {useAuth} from "./AuthProvider.jsx"
+import {useAuth} from "./context/AuthProvider.jsx"
 function AllCourses() {
   let {user}=useAuth();
   const [details, setDetails] = useState([]);
